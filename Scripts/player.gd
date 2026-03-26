@@ -1,12 +1,7 @@
 extends CharacterBody2D
 
-@onready var anim: AnimatedSprite2D = $AnimatedSprite2D
-@onready var death_plane: Area2D = $"../Death Plane"
-
 @export var MAX_SPEED := 300
 @export var JUMP_VELOCITY := -350
-
-
 
 var SPEED = 0
 var ACCELERATION = 500
@@ -24,7 +19,7 @@ func flip(direction):
 		return false
 
 func _physics_process(delta: float) -> void:
-	var did_move = (lastX == position.x) and (lastY == position.y)
+	var did_move = (lastX != position.x) or (lastY != position.y)
 	var direction := Input.get_axis("move_left", "move_right")
 	# Add the gravity.
 	if not is_on_floor():
@@ -39,7 +34,7 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2(0, 0)
 
 	# Get the input direction and handle the movement/deceleration.
-	#if direction: # Adjust the threshold (0.1) as needed:
+	if true: # Adjust the threshold (0.1) as needed:
 		#$AnimatedSprite2D.flip_h = flip(direction)
 		
 		if did_move:
