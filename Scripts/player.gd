@@ -3,6 +3,7 @@ extends CharacterBody2D
 @export var MAX_SPEED := 300
 @export var JUMP_VELOCITY := -500
 @export var SPEED = 500
+@export var PLAYER_ID = 1
 
 var CLIMB_SPEED = 200.0
 var lastX = 0
@@ -11,15 +12,13 @@ var lastY = 0
 func _ready() -> void:
 	pass
 
-func flip(direction):
-	if direction == -1:
-		return true
-	else:
-		return false
+func get_button(key):
+	var player = PLAYER_ID
+	return "$player_$key"
 
 func _physics_process(delta: float) -> void:
 	var did_move = (lastX != position.x) or (lastY != position.y)
-	var direction := Input.get_axis("move_left", "move_right")
+	var direction := Input.get_axis(get_button("move_left"), get_button("move_right"))
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
