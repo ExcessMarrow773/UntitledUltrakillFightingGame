@@ -2,8 +2,8 @@ extends CharacterBody2D
 
 @export var MAX_SPEED := 300
 @export var JUMP_VELOCITY := -350
+@export var SPEED = 100
 
-var SPEED = 0
 var ACCELERATION = 500
 var CLIMB_SPEED = 200.0
 var lastX = 0
@@ -36,17 +36,13 @@ func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
 	if true: # Adjust the threshold (0.1) as needed:
 		#$AnimatedSprite2D.flip_h = flip(direction)
-		
-		if did_move:
-			SPEED = min(SPEED + ACCELERATION * delta, MAX_SPEED)
-			
+
 		velocity.x = direction * SPEED
 		
 		
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-		SPEED = 0
-	
+
 	move_and_slide()
 	lastY = position.y
 	lastX = position.x
