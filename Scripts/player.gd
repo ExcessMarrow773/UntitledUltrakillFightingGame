@@ -33,14 +33,7 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2(0, 0)
 
 	# Get the input direction and handle the movement/deceleration.
-	if true: # Adjust the threshold (0.1) as needed:
-		#$AnimatedSprite2D.flip_h = flip(direction)
-
-		velocity.x = direction * SPEED
-		
-		
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+	velocity.x = direction * SPEED
 
 	move_and_slide()
 	lastY = position.y
