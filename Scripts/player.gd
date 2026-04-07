@@ -5,9 +5,6 @@ extends CharacterBody2D
 @export var SPEED = 500
 @export_enum("Player 1", "Player 2") var PLAYER_ID: int
 
-@onready var text = $"../Label"
-
-var CLIMB_SPEED = 200.0
 var lastX = 0
 var lastY = 0
 var device
@@ -17,16 +14,14 @@ func _ready() -> void:
 
 var playerInput: float
 
-func get_button(key):
-	var player = PLAYER_ID
-	return "$player_$key"
-
 func _input(event):
 	device = event.device
 
 func _physics_process(delta: float) -> void:
+	
 	var did_move = (lastX != position.x) or (lastY != position.y)
 	var direction := 0
+	
 	if device == PLAYER_ID:
 		direction = Input.get_axis("move_left", "move_right")
 	
@@ -35,7 +30,7 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and is_on_floor() and device == PLAYER_ID:
 		velocity.y = JUMP_VELOCITY
 
 	# Handles respawn/ restart
