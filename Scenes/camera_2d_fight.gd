@@ -6,8 +6,14 @@ extends Camera2D
 func _ready() -> void:
 	pass # Replace with function body.
 
+func is_on_screen(point: Vector2) -> bool:
+	var screen_rect = get_viewport_rect()
+	return screen_rect.has_point(point)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	position = (p1.position + p2.position) / 2
-	
+	if (!is_on_screen(p1.position) or !is_on_screen(p2.position)):
+		zoom += Vector2(0.1, 0.1)
+	else:
+		zoom -= Vector2(0.1, 0.1)

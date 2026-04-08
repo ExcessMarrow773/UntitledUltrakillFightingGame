@@ -1,8 +1,7 @@
 extends CharacterBody2D
 
-@export var MAX_SPEED := 300
-@export var JUMP_VELOCITY := -500
-@export var SPEED = 500
+@export var JUMP_VELOCITY := -400
+@export var SPEED = 320
 @export_enum("Player 1", "Player 2") var PLAYER_ID: int
 
 var lastX = 0
