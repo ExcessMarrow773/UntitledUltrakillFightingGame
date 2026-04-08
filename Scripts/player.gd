@@ -22,16 +22,14 @@ func _physics_process(delta: float) -> void:
 	var did_move = (lastX != position.x) or (lastY != position.y)
 	var direction := 0
 	
-	if device == PLAYER_ID:
-		direction = Input.get_axis("move_left", "move_right")
-	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-
-	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor() and device == PLAYER_ID:
-		velocity.y = JUMP_VELOCITY
+	
+	# Individual input detection
+	if device == PLAYER_ID:
+		direction = Input.get_axis("move_left", "move_right")
+		if Input.is_action_just_pressed("jump") and is_on_floor(): velocity.y = JUMP_VELOCITY
 
 	# Handles respawn/ restart
 	if Input.is_action_just_pressed("restart"):
