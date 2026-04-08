@@ -25,5 +25,5 @@ func _process(delta: float) -> void:
 		zoom -= Vector2(0.1, 0.1)
 	else:
 		zoom += Vector2(0.1, 0.1)
-	#zoom.x = min(zoom_threshold, zoom.x)
-	#zoom.y = min(zoom_threshold, zoom.y)
+	zoom.x = min(zoom_threshold, zoom.x)
+	zoom.y = min(zoom_threshold, zoom.y)
