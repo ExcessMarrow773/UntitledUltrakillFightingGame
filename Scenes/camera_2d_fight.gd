@@ -2,6 +2,7 @@ extends Camera2D
 @onready var p1 = %Player1
 @onready var p2 = %Player2
 
+@export var zoom_threshold: float = 1
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -18,9 +19,11 @@ func is_on_screen(point: Vector2) -> bool:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	position = (p1.position + p2.position) / 2
-	if (!is_on_screen(p1.position) or !is_on_screen(p2.position)):
+	if is_on_screen(p1.position) and is_on_screen(p2.position):
+		pass
+	elif (!is_on_screen(p1.position) or !is_on_screen(p2.position)):
 		zoom -= Vector2(0.1, 0.1)
 	else:
 		zoom += Vector2(0.1, 0.1)
-	zoom.x = min(1, zoom.x)
-	zoom.y = min(1, zoom.y)
+	#zoom.x = min(zoom_threshold, zoom.x)
+	#zoom.y = min(zoom_threshold, zoom.y)
