@@ -12,23 +12,24 @@ func _ready() -> void:
 	pass
 
 var playerInput: float
+var direction := 0
 
 func _input(event):
 	device = event.device
-
+	if device == PLAYER_ID:
+		direction = Input.get_axis("move_left", "move_right")
+		if Input.is_action_just_pressed("jump") and is_on_floor():
+			velocity.y = JUMP_VELOCITY
 func _physics_process(delta: float) -> void:
-	
 	var did_move = (lastX != position.x) or (lastY != position.y)
-	var direction := 0
 	
+	print(direction)
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
 	# Individual input detection
-	if device == PLAYER_ID:
-		direction = Input.get_axis("move_left", "move_right")
-		if Input.is_action_just_pressed("jump") and is_on_floor(): velocity.y = JUMP_VELOCITY
+	
 
 	# Handles respawn/ restart
 	if Input.is_action_just_pressed("restart"):
@@ -40,5 +41,3 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	lastY = position.y
 	lastX = position.x
-	if Input.is_action_just_pressed("quit"): get_tree().quit()
-	
