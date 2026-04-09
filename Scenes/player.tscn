@@ -182,3 +182,5 @@ position = Vector2(8.999999, -10.999985)
 scale = Vector2(1.95, 1.95)
 sprite_frames = SubResource("SpriteFrames_ukyrk")
 animation = &"hit"
+animation = &"idle"
+frame_progress = 0.15745023
