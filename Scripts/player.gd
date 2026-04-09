@@ -22,10 +22,16 @@ func _input(event):
 			velocity.y = JUMP_VELOCITY
 func _physics_process(delta: float) -> void:
 	var did_move = (lastX != position.x) or (lastY != position.y)
-	if velocity == Vector2(0, 0):
+	if direction == 0:
 		$AnimatedSprite2D.play("idle")
 	else:
-		$AnimatedSprite2D.stop()
+		$AnimatedSprite2D.play("walk")
+	
+	if direction < 0:
+		$AnimatedSprite2D.flip_h = true
+	else:
+		$AnimatedSprite2D.flip_h = false
+
 	print(direction)
 	# Add the gravity.
 	if not is_on_floor():
