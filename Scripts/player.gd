@@ -22,7 +22,10 @@ func _input(event):
 			velocity.y = JUMP_VELOCITY
 func _physics_process(delta: float) -> void:
 	var did_move = (lastX != position.x) or (lastY != position.y)
-	
+	if velocity == Vector2(0, 0):
+		$AnimatedSprite2D.play("idle")
+	else:
+		$AnimatedSprite2D.stop()
 	print(direction)
 	# Add the gravity.
 	if not is_on_floor():
@@ -38,6 +41,6 @@ func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
 	velocity.x = direction * SPEED
 
-	move_and_slide()
 	lastY = position.y
 	lastX = position.x
+	move_and_slide()
