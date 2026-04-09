@@ -19,7 +19,7 @@ func _input(event):
 func _physics_process(delta: float) -> void:
 	
 	var did_move = (lastX != position.x) or (lastY != position.y)
-	var direction := 0
+	var direction := 0.0
 	
 	# Add the gravity.
 	if not is_on_floor():
