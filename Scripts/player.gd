@@ -29,8 +29,10 @@ func _physics_process(delta: float) -> void:
 	
 	if direction < 0:
 		$AnimatedSprite2D.flip_h = true
+		$AnimatedSprite2D.offset.x = -8
 	else:
 		$AnimatedSprite2D.flip_h = false
+		$AnimatedSprite2D.offset.x = 0
 
 	print(direction)
 	# Add the gravity.
