@@ -48,23 +48,15 @@ func _physics_process(delta: float) -> void:
 	
 
 	print(direction)
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-	
-	# Individual input detection
 	
 
 	# Handles respawn/ restart
 	if Input.is_action_just_pressed("restart"):
 		velocity = Vector2(0, 0)
 
-	# Get the input direction and handle the movement/deceleration.
-	velocity.x = direction * SPEED
 
 	lastY = position.y
 	lastX = position.x
-	move_and_slide()
 
 
 
