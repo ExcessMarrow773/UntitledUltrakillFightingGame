@@ -19,8 +19,8 @@ func _process(delta: float) -> void:
 	if get_window().size.x / zoom.x > p1.position.distance_to(p2.position) * zoom.x :
 		zoom += zoom_increment_vector
 	
-	print("w" + str(get_window().size.x))
-	print(p1.position.distance_to(p2.position))
-	print(zoom)
+	#print("w" + str(get_window().size.x))
+	#print(p1.position.distance_to(p2.position))
+	#print(zoom)
 	#zoom.x = max(zoom_max, zoom.x)
 	#zoom.y = max(zoom_max, zoom.y)
