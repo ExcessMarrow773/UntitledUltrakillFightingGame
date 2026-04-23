@@ -19,6 +19,12 @@ var attack := false
 var animation = ""
 var is_attacking
 
+## Attacks
+var down_slash_attack = preload("res://Scenes/Attacks/down_slash.tscn")
+
+
+
+
 func wait(seconds: float):
 	await get_tree().create_timer(seconds).timeout
 
@@ -35,7 +41,8 @@ func _input(event):
 
 func _physics_process(delta: float) -> void:
 	var did_move = (lastX != position.x) or (lastY != position.y)
-
+	var anim_flip = direction < 0
+	
 	
 	if direction == 0 and !is_attacking:
 		animation = "idle"
@@ -44,11 +51,18 @@ func _physics_process(delta: float) -> void:
 		animation = "walk"
 		$AnimatedSprite2D.play("walk")
 		
-	if attack:
+	if attack and !is_attacking:
 		is_attacking = true
 		animation = "attack"
 		$AnimatedSprite2D.play("attack")
-	
+		var scene_instance = down_slash_attack.instantiate()
+		add_child(scene_instance)
+		
+		if $AnimatedSprite2D.flip_h: scene_instance.scale.x *= -1
+		
+		await $AnimatedSprite2D.animation_finished
+		remove_child(scene_instance)
+
 	if direction < 0 and !is_attacking:
 		$AnimatedSprite2D.flip_h = true
 		$AnimatedSprite2D.offset.x = -8
