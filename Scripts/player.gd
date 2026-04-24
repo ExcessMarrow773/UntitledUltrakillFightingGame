@@ -90,6 +90,7 @@ func _physics_process(delta: float) -> void:
 	
 
 func death():
+	self.health = MAX_HEALTH
 	self.visible = false
 	await wait(1.0)
 	self.visible = true
