@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var collider = $Area2D
 @onready var character = self.get_parent()
-@export var damage = 5.0
+@export var damage = 50.0
 
 var collisions = []
 
@@ -16,9 +16,8 @@ func _process(delta: float) -> void:
 	pass
 
 
-func _on_area_2d_area_entered(area: Area2D) -> void:
-	collisions.append(area)
-	
 
-func _on_area_2d_area_exited(area: Area2D) -> void:
-	collisions.remove(area)
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body is CharacterBody2D:
+		body.health -= damage
