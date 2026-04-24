@@ -1,7 +1,8 @@
 extends Node2D
 
 @onready var collider = $Area2D
-@onready var charicter = self.get_parent()
+@onready var character = self.get_parent()
+@export var damage = 5.0
 
 var collisions = []
 
@@ -12,8 +13,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	
-	print(collisions)
+	pass
 
 
 func _on_area_2d_area_entered(area: Area2D) -> void:

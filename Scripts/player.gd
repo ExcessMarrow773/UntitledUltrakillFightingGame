@@ -84,6 +84,17 @@ func _physics_process(delta: float) -> void:
 	lastX = position.x
 
 	move_and_slide()
+	
+	for i in range(get_slide_collision_count() - 1):
+		var collision = get_slide_collision(i)
+		var collided_object = collision.get_collider()
+		if ("slash" in collided_object.name) and not (collided_object in self.get_children()):
+			health -= collided_object.damage
+	
+	if (health <= 0):
+		death()
+	
+	print(health)
 
 func death():
 	self.visible = false
