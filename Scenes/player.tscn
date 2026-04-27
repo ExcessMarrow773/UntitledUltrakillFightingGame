@@ -122,7 +122,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -215,6 +215,6 @@ shape = SubResource("RectangleShape2D_cvnsp")
 position = Vector2(8.999999, -10.999985)
 scale = Vector2(1.95, 1.95)
 sprite_frames = SubResource("SpriteFrames_ukyrk")
-animation = &"idle"
+animation = &"attack"
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

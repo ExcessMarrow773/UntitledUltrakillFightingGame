@@ -2,7 +2,8 @@ extends Node2D
 
 @onready var collider = $Area2D
 @onready var character = self.get_parent()
-@export var damage = 50.0
+@export var damage = 20.0
+@export var knockback_magnitude = 250.0
 
 var collisions = []
 
@@ -21,3 +22,12 @@ func _process(delta: float) -> void:
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is CharacterBody2D:
 		body.health -= damage
+		var knockback = body.get_parent().position - character.position
+		knockback = knockback.normalized()
+		knockback.x *= knockback_magnitude; knockback.y *= knockback_magnitude
+		if (body.velocity.y > 0): body.velocity.y = 0
+		body.velocity += knockback
+		
+		#print(knockback)
+		#print(body.velocity)
+		

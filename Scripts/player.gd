@@ -2,9 +2,9 @@ extends CharacterBody2D
 
 @export var JUMP_VELOCITY := -400
 @export var SPEED = 320
+@export var ACCEL = SPEED/5
 @export var MAX_HEALTH = 100
 @export_enum("Player 1", "Player 2") var PLAYER_ID: int
-
 
 @onready var sprite2d = self.get_child(1)
 
@@ -22,9 +22,6 @@ var is_attacking
 
 ## Attacks
 var down_slash_attack = preload("res://Scenes/Attacks/down_slash.tscn")
-
-
-
 
 func wait(seconds: float):
 	await get_tree().create_timer(seconds).timeout
@@ -46,7 +43,7 @@ func _physics_process(delta: float) -> void:
 	var did_move = (lastX != position.x) or (lastY != position.y)
 	var anim_flip = direction_last < 0
 	
-	print("Direction %s, Last: %s" % [direction, direction_last])
+	#print("Direction %s, Last: %s" % [direction, direction_last])
 	
 	
 	if direction == 0 and !is_attacking:
@@ -70,16 +67,17 @@ func _physics_process(delta: float) -> void:
 
 	if direction_last < 0 and !is_attacking:
 		$AnimatedSprite2D.flip_h = true
-		$AnimatedSprite2D.offset.x = -8
+		$AnimatedSprite2D.offset.x = -11
 	elif !is_attacking and (animation != "attack"):
 		$AnimatedSprite2D.flip_h = false
 		$AnimatedSprite2D.offset.x = 0
 	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-
-	velocity.x = direction * SPEED
 	
+	velocity.x += ACCEL * direction
+	if is_on_floor() and abs(velocity.x) > SPEED:
+		pass
 
 	# Handles respawn/ restart
 	if Input.is_action_just_pressed("restart"):
@@ -101,6 +99,8 @@ func death():
 	self.visible = true
 	self.position = $"../Node2D".position
 
+func _on_death_plane_body_entered(_body: CharacterBody2D) -> void:
+	death()
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if animation == "attack":
