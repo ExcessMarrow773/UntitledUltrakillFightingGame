@@ -15,6 +15,7 @@ var device
 var health = MAX_HEALTH
 var playerInput: float
 var direction := 0
+var direction_last := 0
 var attack := false
 var animation = ""
 var is_attacking
@@ -33,6 +34,8 @@ func _input(event):
 	
 	if device == PLAYER_ID:
 		direction = Input.get_axis("move_left", "move_right")
+		if (direction < 0): direction_last = -1
+		elif (direction > 0): direction_last = 1
 		attack = Input.is_action_pressed("attack")
 		if Input.is_action_just_pressed("jump") and is_on_floor():
 			velocity.y = JUMP_VELOCITY
@@ -41,7 +44,9 @@ func _input(event):
 
 func _physics_process(delta: float) -> void:
 	var did_move = (lastX != position.x) or (lastY != position.y)
-	var anim_flip = direction < 0
+	var anim_flip = direction_last < 0
+	
+	print("Direction %s, Last: %s" % [direction, direction_last])
 	
 	
 	if direction == 0 and !is_attacking:
@@ -63,7 +68,7 @@ func _physics_process(delta: float) -> void:
 		await $AnimatedSprite2D.animation_finished
 		remove_child(scene_instance)
 
-	if direction < 0 and !is_attacking:
+	if direction_last < 0 and !is_attacking:
 		$AnimatedSprite2D.flip_h = true
 		$AnimatedSprite2D.offset.x = -8
 	elif !is_attacking and (animation != "attack"):
