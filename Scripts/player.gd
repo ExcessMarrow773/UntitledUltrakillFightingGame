@@ -75,9 +75,12 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
-	velocity.x += ACCEL * direction
-	if is_on_floor() and abs(velocity.x) > SPEED:
-		pass
+	if direction==0:
+		if is_on_floor(): velocity.x = 0
+		else: velocity.x *= 0.9
+	else:	
+		if abs(velocity.x) < SPEED:
+		velocity.x += ACCEL*direction*delta
 
 	# Handles respawn/ restart
 	if Input.is_action_just_pressed("restart"):
