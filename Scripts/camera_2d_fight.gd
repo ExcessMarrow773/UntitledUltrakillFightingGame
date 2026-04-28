@@ -1,7 +1,7 @@
 extends Camera2D
 @onready var p1 = %Player1
 @onready var p2 = %Player2
-#@export var zoom_max = 0.5
+@export var zoom_max = 1
 @export var zoom_increment = 0.01
 var zoom_increment_vector = Vector2(zoom_increment, zoom_increment)
 
