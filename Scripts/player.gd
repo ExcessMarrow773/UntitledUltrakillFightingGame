@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
-@export var JUMP_VELOCITY := -400
+@export var JUMP_VELOCITY := -430
 @export var SPEED = 230
-@export var ACCEL = SPEED/5
+@export var ACCEL = SPEED / 5
 @export var MAX_HEALTH = 100
 @export_enum("Player 1", "Player 2") var PLAYER_ID: int
 
@@ -31,7 +31,7 @@ func wait(seconds: float):
 
 func _input(event):
 	device = event.device
-	
+	#print(ev)
 	if device == PLAYER_ID:
 		direction = Input.get_axis("move_left", "move_right")
 		if (direction < 0): direction_round = -1
@@ -88,7 +88,9 @@ func _physics_process(delta: float) -> void:
 	if (direction==0 or direction_round != direction_last):
 		if is_on_floor(): velocity.x += -velocity.x * (0.25)
 		else: velocity.x *= (1-0.01)
-	elif abs(velocity.x) < SPEED: velocity.x += ACCEL*direction
+
+	elif abs(velocity.x) < SPEED:
+		velocity.x += ACCEL*direction
 
 	# Handles respawn/ restart
 	if Input.is_action_just_pressed("restart"):
