@@ -22,11 +22,14 @@ func _process(delta: float) -> void:
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is CharacterBody2D:
 		body.health -= damage
-		var knockback = body.get_parent().position - character.position
-		knockback = knockback.normalized()
-		knockback.x *= knockback_magnitude; knockback.y *= knockback_magnitude
-		if (body.velocity.y > 0): body.velocity.y = 0
-		body.velocity += knockback
+		#var knockback = body.get_parent().position - character.position
+		#knockback = knockback.normalized()
+		#knockback.x *= knockback_magnitude; knockback.y *= knockback_magnitude
+		#body.velocity.y = 0
+		body.velocity += character.velocity
+		body.velocity = body.velocity.normalized()
+		body.velocity *= knockback_magnitude
+		#body.velocity += knockback
 		
 		#print(knockback)
 		#print(body.velocity)
