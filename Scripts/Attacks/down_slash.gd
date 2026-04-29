@@ -20,6 +20,7 @@ func _process(delta: float) -> void:
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body == character: return
 	if body is CharacterBody2D:
 		body.health -= damage
 		var knockback = body.get_parent().position - character.position
