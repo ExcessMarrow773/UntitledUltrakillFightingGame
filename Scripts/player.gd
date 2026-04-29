@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var SPEED = 230
 @export var ACCEL = SPEED / 5
 @export var MAX_HEALTH = 100
-var PLAYER_ID
+@export_enum("Player 1", "Player 2") var PLAYER_ID: int
 
 @onready var sprite2d = self.get_child(1)
 
@@ -33,7 +33,7 @@ func _input(event):
 	if (event is InputEventJoypadButton) or (event is InputEventJoypadMotion):
 		print("Controller ID: ", event.device)
 	
-	direction = Input.get_axis("move_left", "move_right")
+	direction = Input.get_axis("p"+str(PLAYER_ID+1)+"_move_left", "p"+str(PLAYER_ID+1)+"_move_right")
 	if (direction < 0): direction_round = -1
 	elif (direction > 0): direction_round = 1
 	
@@ -43,8 +43,8 @@ func _input(event):
 	elif abs(velocity.x) < SPEED:
 		velocity.x += ACCEL*direction
 	
-	attack = Input.is_action_pressed("attack")
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	attack = Input.is_action_pressed("p"+str(PLAYER_ID+1)+"_attack")
+	if Input.is_action_just_pressed("p"+str(PLAYER_ID+1)+"_jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 	elif Input.is_action_just_pressed("restart"):
 		death()
