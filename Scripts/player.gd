@@ -30,8 +30,8 @@ func wait(seconds: float):
 	await get_tree().create_timer(seconds).timeout
 
 func _input(event):
-	if (event is InputEventJoypadButton) or (event is InputEventJoypadMotion):
-		print("Controller ID: ", event.device)
+	#if (event is InputEventJoypadButton) or (event is InputEventJoypadMotion):
+	#	print("Controller ID: ", event.device)
 	
 	direction = Input.get_axis("p"+str(PLAYER_ID+1)+"_move_left", "p"+str(PLAYER_ID+1)+"_move_right")
 	if (direction < 0): direction_round = -1
@@ -53,7 +53,7 @@ func _physics_process(delta: float) -> void:
 	var did_move = (lastX != position.x) or (lastY != position.y)
 	var anim_flip = direction_round < 0
 	
-	#print("Direction %s, Last: %s" % [direction, direction_round])
+	#print("Direction %d, Last: %d" % [direction, direction_round])
 	
 	
 	if !(is_attacking or is_stunned):
