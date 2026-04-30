@@ -18,8 +18,8 @@ var playerInput: float
 var direction := 0
 var direction_round := 0
 var attack := false
-var animation = ""
 var is_attacking
+var animation = ""
 var stun := false
 var is_stunned
 
@@ -36,6 +36,8 @@ func _input(event):
 	direction = Input.get_axis("p"+str(PLAYER_ID+1)+"_move_left", "p"+str(PLAYER_ID+1)+"_move_right")
 	if (direction < 0): direction_round = -1
 	elif (direction > 0): direction_round = 1
+	
+	if is_stunned: return
 	
 	if (direction==0 or direction_round != direction_last):
 		if is_on_floor(): velocity.x += -velocity.x * (0.25)
@@ -84,13 +86,10 @@ func _physics_process(delta: float) -> void:
 		$AnimatedSprite2D.offset.x = 0
 	
 	if stun and !is_stunned:
+		stun = false
 		is_stunned = true
 		animation = "hit"
 		$AnimatedSprite2D.play("hit")
-		await $AnimatedSprite2D.animation_finished
-		is_stunned = false
-		stun = false
-		
 	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -127,6 +126,5 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	
 	if animation == "hit":
 		is_stunned = false
-		stun = false
 	
 	animation = ""
