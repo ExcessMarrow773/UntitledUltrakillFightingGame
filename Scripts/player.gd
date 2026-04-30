@@ -26,6 +26,12 @@ var is_stunned
 ## Attacks
 var down_slash_attack = preload("res://Scenes/Attacks/down_slash.tscn")
 
+func debug(msg):
+	print("p"+str(PLAYER_ID+1)+":"+str(msg))
+
+func _ready() -> void:
+	debug("init")
+
 func wait(seconds: float):
 	await get_tree().create_timer(seconds).timeout
 
@@ -52,7 +58,6 @@ func _input(event):
 	#	death()
 
 func _physics_process(delta: float) -> void:
-	
 	$RichTextLabel.text = str(health) + "/" + str(MAX_HEALTH)
 	var did_move = (lastX != position.x) or (lastY != position.y)
 	var anim_flip = direction_round < 0
@@ -109,18 +114,27 @@ func _physics_process(delta: float) -> void:
 	
 
 func death():
+	debug("Dying")
+	self.health = MAX_HEALTH
+
+	$RichTextLabel.visible = false
+	animation = "death"
 	$AnimatedSprite2D.play("death")
 	await $AnimatedSprite2D.animation_finished
 	self.visible = false
 	await wait(1.0)
-	self.health = MAX_HEALTH
 	self.visible = true
+	$RichTextLabel.visible = true
 	self.position = $"../Node2D".position
+	is_stunned = false
+	
+	
 
 func _on_death_plane_body_entered(_body: CharacterBody2D) -> void:
 	death()
 
 func _on_animated_sprite_2d_animation_finished() -> void:
+	debug("anim " + animation)
 	if animation == "attack":
 		is_attacking = false
 	
