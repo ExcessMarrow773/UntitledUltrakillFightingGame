@@ -55,10 +55,10 @@ func _input(event):
 	if Input.is_action_just_pressed("p"+str(PLAYER_ID+1)+"_jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 	#elif Input.is_action_just_pressed("restart"):
-	#	death()
+		#death()
 
 func _physics_process(delta: float) -> void:
-	$RichTextLabel.text = str(health) + "/" + str(MAX_HEALTH)
+	$RichTextLabel.text = "p"+str(PLAYER_ID+1) + " " + str(health) + "/" + str(MAX_HEALTH)+"\n"+str(is_attacking)
 	var did_move = (lastX != position.x) or (lastY != position.y)
 	var anim_flip = direction_round < 0
 	
@@ -94,6 +94,8 @@ func _physics_process(delta: float) -> void:
 	
 	if stun and !is_stunned:
 		is_stunned = true
+		is_attacking = false
+		attack = false
 		animation = "hit"
 		$AnimatedSprite2D.play("hit")
 		
@@ -137,6 +139,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	debug("anim " + animation)
 	if animation == "attack":
 		is_attacking = false
+		
 	
 	if animation == "hit":
 		is_stunned = false
