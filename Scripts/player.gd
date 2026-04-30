@@ -48,8 +48,8 @@ func _input(event):
 	attack = Input.is_action_pressed("p"+str(PLAYER_ID+1)+"_attack")
 	if Input.is_action_just_pressed("p"+str(PLAYER_ID+1)+"_jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
-	elif Input.is_action_just_pressed("restart"):
-		death()
+	#elif Input.is_action_just_pressed("restart"):
+	#	death()
 
 func _physics_process(delta: float) -> void:
 	var did_move = (lastX != position.x) or (lastY != position.y)
@@ -86,17 +86,14 @@ func _physics_process(delta: float) -> void:
 		$AnimatedSprite2D.offset.x = 0
 	
 	if stun and !is_stunned:
-		stun = false
 		is_stunned = true
 		animation = "hit"
 		$AnimatedSprite2D.play("hit")
+	if is_stunned:
+		stun = false
 	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-
-	# Handles respawn/ restart
-	if Input.is_action_just_pressed("restart"):
-		death()
 
 	lastY = position.y
 	lastX = position.x
