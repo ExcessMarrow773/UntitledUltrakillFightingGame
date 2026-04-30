@@ -68,15 +68,15 @@ func _physics_process(delta: float) -> void:
 	if !(is_attacking or is_stunned):
 		if (direction == 0):
 			animation = "idle"
-			$AnimatedSprite2D.play("idle")
+			$AnimatedSprite2D.play("p"+str(PLAYER_ID+1)+"_idle")
 		else:
 			animation = "walk"
-			$AnimatedSprite2D.play("walk")
+			$AnimatedSprite2D.play("p"+str(PLAYER_ID+1)+"_walk")
 		
 	if attack and !(is_attacking or is_stunned):
 		is_attacking = true
 		animation = "attack"
-		$AnimatedSprite2D.play("attack")
+		$AnimatedSprite2D.play("p"+str(PLAYER_ID+1)+"_attack")
 		var scene_instance = down_slash_attack.instantiate()
 		add_child(scene_instance)
 		
@@ -97,7 +97,7 @@ func _physics_process(delta: float) -> void:
 		is_attacking = false
 		attack = false
 		animation = "hit"
-		$AnimatedSprite2D.play("hit")
+		$AnimatedSprite2D.play("p"+str(PLAYER_ID+1)+"_hit")
 		
 	if is_stunned:
 		stun = false
@@ -121,7 +121,7 @@ func death():
 
 	$RichTextLabel.visible = false
 	animation = "death"
-	$AnimatedSprite2D.play("death")
+	$AnimatedSprite2D.play("p"+str(PLAYER_ID+1)+"_death")
 	await $AnimatedSprite2D.animation_finished
 	self.visible = false
 	await wait(1.0)
