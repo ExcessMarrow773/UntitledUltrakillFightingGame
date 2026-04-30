@@ -22,8 +22,9 @@ func _process(delta: float) -> void:
 func _on_area_2d_body_entered(body: CharacterBody2D) -> void:
 	#if body == character: return
 	
+	if body.animation == "death": return
+	
 	if (character.PLAYER_ID == body.PLAYER_ID): return
-	print(character.PLAYER_ID, body.PLAYER_ID, self.get_parent().PLAYER_ID)
 	body.health -= damage
 	#var knockback = body.get_parent().position - character.position
 	#knockback = knockback.normalized()

@@ -7,13 +7,13 @@ extends CharacterBody2D
 @export_enum("Player 1", "Player 2") var PLAYER_ID: int
 
 @onready var sprite2d = self.get_child(1)
+@onready var health = MAX_HEALTH
 
 var lastX = 0
 var lastY = 0
 var direction_last
 var device
 
-var health = MAX_HEALTH
 var playerInput: float
 var direction := 0
 var direction_round := 0
@@ -52,6 +52,8 @@ func _input(event):
 	#	death()
 
 func _physics_process(delta: float) -> void:
+	
+	$RichTextLabel.text = str(health) + "/" + str(MAX_HEALTH)
 	var did_move = (lastX != position.x) or (lastY != position.y)
 	var anim_flip = direction_round < 0
 	
@@ -89,6 +91,7 @@ func _physics_process(delta: float) -> void:
 		is_stunned = true
 		animation = "hit"
 		$AnimatedSprite2D.play("hit")
+		
 	if is_stunned:
 		stun = false
 	
