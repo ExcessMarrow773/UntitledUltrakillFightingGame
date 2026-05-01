@@ -117,9 +117,9 @@ func _physics_process(delta: float) -> void:
 
 func death():
 	debug("Dying")
+	$RichTextLabel.visible = false
 	self.health = MAX_HEALTH
 
-	$RichTextLabel.visible = false
 	animation = "death"
 	$AnimatedSprite2D.play("p"+str(PLAYER_ID+1)+"_death")
 	await $AnimatedSprite2D.animation_finished
@@ -139,9 +139,14 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	debug("anim " + animation)
 	if animation == "attack":
 		is_attacking = false
-		
 	
 	if animation == "hit":
 		is_stunned = false
+	
+	if animation == "death":
+		is_stunned = false
+		stun = false
+		attack = false
+		is_attacking = false
 	
 	animation = ""

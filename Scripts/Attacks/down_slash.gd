@@ -22,7 +22,7 @@ func _process(delta: float) -> void:
 func _on_area_2d_body_entered(body: CharacterBody2D) -> void:
 	#if body == character: return
 	
-	if body.animation == "death": return
+	if body.animation == "death" or character.animation == "death": return
 	
 	if (character.PLAYER_ID == body.PLAYER_ID): return
 	body.health -= damage
