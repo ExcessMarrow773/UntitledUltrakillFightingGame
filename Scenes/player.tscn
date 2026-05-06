@@ -569,6 +569,7 @@ sprite_frames = SubResource("SpriteFrames_ukyrk")
 animation = &"p2_death"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=556994068]
+visible = false
 offset_left = -32.0
 offset_top = -40.0
 offset_right = 78.0

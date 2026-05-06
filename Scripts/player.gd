@@ -5,6 +5,7 @@ extends CharacterBody2D
 @export var ACCEL = SPEED / 5
 @export var MAX_HEALTH = 100
 @export_enum("Player 1", "Player 2") var PLAYER_ID: int
+@export var base_damage = 20
 
 @onready var sprite2d = self.get_child(1)
 @onready var health = MAX_HEALTH
@@ -22,6 +23,7 @@ var is_attacking
 var animation = ""
 var stun := false
 var is_stunned
+var dead := false
 
 ## Attacks
 var down_slash_attack = preload("res://Scenes/Attacks/down_slash.tscn")
@@ -79,7 +81,7 @@ func _physics_process(delta: float) -> void:
 		$AnimatedSprite2D.play("p"+str(PLAYER_ID+1)+"_attack")
 		var scene_instance = down_slash_attack.instantiate()
 		add_child(scene_instance)
-		
+		scene_instance.damage = base_damage
 		if $AnimatedSprite2D.flip_h: scene_instance.scale.x *= -1
 		
 		await $AnimatedSprite2D.animation_finished
@@ -111,25 +113,24 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 	
-	if (health <= 0):
+	if (health <= 0) and !dead:
 		death()
 	
 
 func death():
 	debug("Dying")
-	$RichTextLabel.visible = false
-	self.health = MAX_HEALTH
+	dead = true
 
 	animation = "death"
 	$AnimatedSprite2D.play("p"+str(PLAYER_ID+1)+"_death")
 	await $AnimatedSprite2D.animation_finished
 	self.visible = false
 	await wait(1.0)
+	self.health = MAX_HEALTH
 	self.visible = true
-	$RichTextLabel.visible = true
 	self.position = $"../Node2D".position
 	is_stunned = false
-	
+	dead = false
 	
 
 func _on_death_plane_body_entered(_body: CharacterBody2D) -> void:

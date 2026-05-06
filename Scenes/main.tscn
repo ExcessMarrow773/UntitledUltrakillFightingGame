@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://djxvjsksfrned" path="res://Scenes/player.tscn" id="1_jjgbg"]
 [ext_resource type="Script" uid="uid://dnhkktuh36347" path="res://Scripts/main.gd" id="1_jjvhh"]
 [ext_resource type="Script" uid="uid://2q8yuyyi28cs" path="res://Scripts/camera_2d_fight.gd" id="3_8gbba"]
+[ext_resource type="PackedScene" uid="uid://c7rnetor0b0we" path="res://Scenes/UI.tscn" id="5_21xkr"]
 
 [node name="Node2D" type="Node2D" unique_id=846278156]
 script = ExtResource("1_jjvhh")
@@ -19,7 +20,7 @@ unique_name_in_owner = true
 position = Vector2(541, 144)
 up_direction = Vector2(0, -1)
 SPEED = 300
-MAX_HEALTH = 200
+base_damage = 50
 
 [node name="Player2" parent="." unique_id=759727256 instance=ExtResource("1_jjgbg")]
 unique_name_in_owner = true
@@ -39,3 +40,13 @@ script = ExtResource("3_8gbba")
 
 [node name="Node2D" type="Node2D" parent="." unique_id=190363109]
 position = Vector2(582, 170)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1891362042]
+visible = false
+scale = Vector2(2.56, 2.56)
+transform = Transform2D(2.56, 0, 0, 2.56, 0, 0)
+
+[node name="Ui" parent="CanvasLayer" unique_id=944991284 node_paths=PackedStringArray("Player1", "Player2") instance=ExtResource("5_21xkr")]
+top_level = true
+Player1 = NodePath("../../Player1")
+Player2 = NodePath("../../Player2")
