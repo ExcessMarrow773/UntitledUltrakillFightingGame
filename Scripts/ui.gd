@@ -4,6 +4,8 @@ extends Control
 
 @onready var Player1_healthBar = $"Player1 Health"
 @onready var Player2_healthBar = $"Player2 Health"
+@onready var Player1_stunTracker = $"Player1 Stun"
+#@onready var Player2_stunTracker = $"Player2 Stun"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

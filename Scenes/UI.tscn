@@ -31,4 +31,14 @@ offset_bottom = 30.0
 theme = ExtResource("1_nxvpl")
 value = 30.0
 fill_mode = 1
-show_percentage = false
+
+[node name="Player1 Stun" type="Button" parent="." unique_id=1194129432]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = -1
+offset_left = 344.0
+offset_top = 3.0
+offset_right = 371.0
+offset_bottom = 30.0
+disabled = true
+button_mask = 0
